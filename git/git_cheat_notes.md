@@ -1,3 +1,8 @@
+
+## Terminology
+
+![Git Workflow](https://github.com/aidinhass/ml-cheat-notes/blob/master/images/git_workflow.png)
+
 ## Setup Git
 
 
