@@ -1,13 +1,14 @@
 
-## Terminology
+# 1. Terminology
 
 ![Git Workflow](https://github.com/aidinhass/ml-cheat-notes/blob/master/images/git_workflow.png)
 
 
+- remote: The git remote command lets you create, view, and delete connections to other repositories. Remote connections are more like bookmarks rather than direct links into other repositories. 
 - Fetch: Download commits, files, and refs from a remote repository into you local repository. You might need this when you want to see what everybody else has been working on.
 - Pull: Download content from a remote repository and immediately update the local repository to match that content.
 
-## General
+# 2. General
 
 | Description            | Command              |
 | :---------------------------------------------------- |:-------------------------------------------------|
@@ -19,48 +20,128 @@
 | Move or rename `path/to/foo` to`path/to/bar` | `git mv path/to/foo path/to/bar`  | 
 | Commit staged files. | `git commit -m "Commit message in imperative form"`      |
 | Add and Commit in a single step | `git commit -am "Commit message in imperative form"` |
-| Add a git RR | `git remote add -p https://github.com/user/project.git` |
+| Add a git remote repository | `git remote add -p https://github.com/user/project.git` |
 | Push local repository `origin` to remote repository `master`; (set default with `-u`) | `git push -u origin master` |
 | Fetch all branches form the remote repository linked | `git fetch`|
-| Fetch the `bar` branch from the `foo` remote repository | `git fetch foo bar`| 
-| Pull from the remote repository linked and merge with the current local repository | `git pull` |
+| Fetch `bar` branch from `foo` remote repository | `git fetch foo bar`| 
+| Fetch from the remote repository linked and merge with the current local repository | `git pull` |
+| Fetch from `bar` branch from `foo` remote repository linked and merge with the current local repository | `git pull foo bar` |
 
- ## Collaborate
+ # 3. Collaborate
  
 | Description            | Command              |
 | :---------------------------------------------------- |:-------------------------------------------------|
 | Show remote details| `git remote -v` |
 | Show local branches| `git branch` |
 | Show remote branches| `git branch -r` |
+| Add a git remote repository | `git remote add -p https://github.com/user/project.git` |
 | Show all branches| `git branch -a` |
 | Create a new branch `foo` | `git branch foo` |
-| Switch to `foo` branch and update the working directory| `git checkout foo`|
-| Create/Switch to `foo` branch and update the working directory; (create the branch if dose exist with `u`)| `git checkout foo`|
-| Merge the `foo` branch to the current working directory| `git merge foo`|
-| Remove the branch `foo`| `git branch -d foo`|
+| Switch to branch `foo` and update the working directory| `git checkout foo`|
+| Create/Switch to branch `foo` and update the working directory; (create the branch if dose exist with `-b`)| `git checkout -b foo`|
+| Merge branch `foo` to the current working directory| `git merge foo`|
+| Remove branch `foo`| `git branch -d foo`|
 
-## Undo
+# 4. Undo
+TBA
 
-| | |
+# 5. Collaborative workflow:
 
-## Collaborative workflow:
+## 5.1. Centralized
+TBA
 
-### Centralized
-1. Initialize the central master branch:
-
-- Switch to the master branch
-```bash\
-git checkout master
-```
-- Fetch the latest changes from the 
-
-### Feature Branch Workflow:
+## 5.2 Feature Branch Workflow:
 All feature development should take place in a dedicated branch instead of the master branch.
 This encapsulation makes it easy for multiple developers to work on a particular feature without disturbing the main codebase.
 It also means the master branch will never contain broken code, which is a huge advantage for continuous integration environments.
 
+The following guideline shows how a user named `<username>` contribute to a project `<projectname>` by creating a new branch to develop `<foo>` feature.
+The current setup assumes that the  user`<username>` has benn add to the project collaborators, and he or she has permission to write and modify project contents.
+### Set up project repository
+1. Clone the the forked repository.
+```bash
+git clone git@github.com:<project-creator-username>/<projectname>
+```
+2. Navigate to the directory of the project repository that you just cloned.
+```bash
+mkdir project-ropositroy
+cd project-repository
+```
+### Create new features
+1. Start the master branch
+- Switch to the master branch
+```bash
+git checkout master
+```
+- Fetch the latest changes from the master branch to match the latest version (HEAD).
+```bash
+git fetch origin
+git reset --hard origin/master
+```
+or
+```bash
+git pull
+```
+2. Create/switch a new branch for feature `foo`
+```bash
+git checkout -b feature-<foo>/<username>
+```
+1-2. Implement the two previous steps (1 and 2) with:
+ ```bash
+git checkout -b feature-<foo>/<username>
+```
+3. Implement, change, stage and commit changes:
+```bash
+# Implement/Edit/Change
+git status
+git add <some-file>
+git commit -m "<commit-message>"
+```
 
-1. Create a new branch to work on. 
-```shell
-git branch 
- ```
+4. Push the feature repository up to the central remote repository.
+This can serve as a convenient backup where the user collaborate with other developers.
+ This will also give them access to the user's initial commits.
+```bash
+git push -u origin feature-<foo>/<username>
+```
+
+### Edit existing features
+Users can follow the exact same procedure to create a new feature. 
+
+### Publish completed features.
+Having a feature completed, a user merges this feature to the project stable branch.
+
+1. Switch to master branch
+```bash
+git checkout master
+```
+2. Pull the latest changes from the master branch
+```bash
+git pull
+```
+3. Pull the latest changes form `feature-<foo>/<username>` branch
+```bash
+git pull origin feature-<foo>/<username>
+```
+This process results in merge commit.
+4. Update the project stable with committed and merged changes from `feature-<foo>/<username>`.
+```bash
+git push
+```
+
+# Commit message convention
+1. Imperative form
+2. Capitalized
+3. No longer than 50 characters
+4. Not end with periods
+
+Examples:
+- Add 'README.md'
+- Fix login bug
+- Correct typo
+- Add plot function
+- Comment data module
+- Remove unused files
+
+
+
