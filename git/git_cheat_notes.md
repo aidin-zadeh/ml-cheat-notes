@@ -59,39 +59,39 @@ The following guideline shows how a user named `<username>` contribute to a proj
 The current setup assumes that the  user`<username>` has benn add to the project collaborators, and he or she has permission to write and modify project contents.
 ### Set up project repository
 1. Clone the the forked repository.
-```bash
+```shell
 git clone git@github.com:<project-creator-username>/<projectname>
 ```
 2. Navigate to the directory of the project repository that you just cloned.
-```bash
+```shell
 mkdir project-ropositroy
 cd project-repository
 ```
 ### Create new features
 1. Start the master branch
 - Switch to the master branch
-```bash
+```shell
 git checkout master
 ```
 - Fetch the latest changes from the master branch to match the latest version (HEAD).
-```bash
+```shell
 git fetch origin
 git reset --hard origin/master
 ```
 or
-```bash
+```shell
 git pull
 ```
 2. Create/switch a new branch for feature `foo`
-```bash
+```shell
 git checkout -b feature-<foo>/<username>
 ```
 1-2. Implement the two previous steps (1 and 2) with:
- ```bash
+ ```shell
 git checkout -b feature-<foo>/<username>
 ```
 3. Implement, change, stage and commit changes:
-```bash
+```shell
 # Implement/Edit/Change
 git status
 git add <some-file>
@@ -101,7 +101,7 @@ git commit -m "<commit-message>"
 4. Push the feature repository up to the central remote repository.
 This can serve as a convenient backup where the user collaborate with other developers.
  This will also give them access to the user's initial commits.
-```bash
+```shell
 git push -u origin feature-<foo>/<username>
 ```
 
@@ -112,20 +112,20 @@ Users can follow the exact same procedure to create a new feature.
 Having a feature completed, a user merges this feature to the project stable branch.
 
 1. Switch to master branch
-```bash
+```shell
 git checkout master
 ```
 2. Pull the latest changes from the master branch
-```bash
+```shell
 git pull
 ```
 3. Pull the latest changes form `feature-<foo>/<username>` branch
-```bash
+```shell
 git pull origin feature-<foo>/<username>
 ```
 This process results in merge commit.
 4. Update the project stable with committed and merged changes from `feature-<foo>/<username>`.
-```bash
+```shell
 git push
 ```
 
