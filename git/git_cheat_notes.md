@@ -45,7 +45,7 @@
 # 4. Undo
 TBA
 
-# 5. Collaborative workflow:
+# 5. Collaborative workflow
 
 ## 5.1. Centralized
 TBA
@@ -129,7 +129,7 @@ This process results in merge commit.
 git push
 ```
 
-# Commit message convention
+# 6. Commit message convention
 1. Imperative form
 2. Capitalized
 3. No longer than 50 characters
