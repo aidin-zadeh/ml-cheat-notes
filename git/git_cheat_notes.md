@@ -130,6 +130,7 @@ git push
 ```
 
 # 6. Commit message convention
+
 1. Imperative form
 2. Capitalized
 3. No longer than 50 characters
@@ -142,6 +143,20 @@ Examples:
 - Add plot function
 - Comment data module
 - Remove unused files
+
+# 7. Branch naming convention
+
+1. **master**: a master branch for final release
+2. **develop**: a branch off of master branch for most main-line development works.
+3. **feature-<feature-name>/<user-name>**: multiple branches off of the develop branch.
+(**<feature-name>**: name of feature; **<user-name>**: person working on the feature)
+4. **release**: a branch as a candidate release
+5. **hotfixes**: short-lived branches for changes to apply to the master branch
+
+![Git Workflow](https://github.com/aidinhass/ml-cheat-notes/blob/master/images/git_model.png)
+
+# References
+- [A successful Git branching model](https://nvie.com/posts/a-successful-git-branching-model/)
 
 
 
