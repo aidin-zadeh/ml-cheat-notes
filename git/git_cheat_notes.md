@@ -148,8 +148,8 @@ Examples:
 
 1. **master**: a master branch for final release
 2. **develop**: a branch off of master branch for most main-line development works.
-3. **feature-<feature-name>/<user-name>**: multiple branches off of the develop branch.
-(**<feature-name>**: name of feature; **<user-name>**: person working on the feature)
+3. **`feature-<feature-name>/<user-name>`**: multiple branches off of the develop branch.
+(**<`feature-name`>**: name of feature; **<`user-name`>**: person working on the feature)
 4. **release**: a branch as a candidate release
 5. **hotfixes**: short-lived branches for changes to apply to the master branch
 
