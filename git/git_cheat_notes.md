@@ -26,6 +26,10 @@
 | Fetch `bar` branch from `foo` remote repository | `git fetch foo bar`| 
 | Fetch from the remote repository linked and merge with the current local repository | `git pull` |
 | Fetch from `bar` branch from `foo` remote repository linked and merge with the current local repository | `git pull foo bar` |
+| Rename the local branch where you are on| `git branch -m <new-branch-name>` |
+| Rename the local branch from when you are on a different branch| `git branch -m <old-branch-name> <new-branch-name>` |
+|Replace the remote old branch name with the local new branch name | `git push -m :<old-branch-name> <new-branch-name>` |
+
 
  # 3. Collaborate
  
