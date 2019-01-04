@@ -21,16 +21,12 @@
 | Commit staged files. | `git commit -m "Commit message in imperative form"`      |
 | Add and Commit in a single step | `git commit -am "Commit message in imperative form"` |
 | Add a git remote repository | `git remote add -p https://github.com/user/project.git` |
+| Change remote URL| `git remote set-url origin https://github.com/USERNAME/REPOSITORY.git` |
 | Push local repository `origin` to remote repository `master`; (set default with `-u`) | `git push -u origin master` |
 | Fetch all branches form the remote repository linked | `git fetch`|
 | Fetch `bar` branch from `foo` remote repository | `git fetch foo bar`| 
 | Fetch from the remote repository linked and merge with the current local repository | `git pull` |
 | Fetch from `bar` branch from `foo` remote repository linked and merge with the current local repository | `git pull foo bar` |
-| Rename the local branch where you are on| `git branch -m <new-branch-name>` |
-| Rename the local branch from when you are on a different branch| `git branch -m <old-branch-name> <new-branch-name>` |
-|Replace the remote old branch name with the local new branch name | `git push -m :<old-branch-name> <new-branch-name>` |
-
-
  # 3. Collaborate
  
 | Description            | Command              |
@@ -45,6 +41,11 @@
 | Create/Switch to branch `foo` and update the working directory; (create the branch if dose exist with `-b`)| `git checkout -b foo`|
 | Merge branch `foo` to the current working directory| `git merge foo`|
 | Remove branch `foo`| `git branch -d foo`|
+| Rename the local branch where you are on| `git branch -m <new-branch-name>` |
+| Rename the local branch from when you are on a different branch| `git branch -m <old-branch-name> <new-branch-name>` |
+|Replace the remote old branch name with the local new branch name | `git push -m :<old-branch-name> <new-branch-name>`|
+|Push to all upstream branches at once| `git push --all -u`|
+
 
 # 4. Undo
 TBA
