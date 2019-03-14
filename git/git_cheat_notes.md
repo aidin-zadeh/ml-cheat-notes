@@ -27,6 +27,8 @@
 | Fetch `bar` branch from `foo` remote repository | `git fetch foo bar`| 
 | Fetch from the remote repository linked and merge with the current local repository | `git pull` |
 | Fetch from `bar` branch from `foo` remote repository linked and merge with the current local repository | `git pull foo bar` |
+| Delete all the commit history  | <ul><li>Check out to a temporary branch:</li>`git checkout --orphan TEMP_BRANCH`<li>Add all the files:</li>`git add -A`<li>Commit the changes:</li>`git commit -am "Initial commit"`<li>Delete the old branch:</li>`git branch -D master`<li>Rename the temporary branch to master:</li>`git branch -m master`<li>Push updates to remote repository:</li>`git push -f origin master`</ul>  |
+
  # 3. Collaborate
  
 | Description            | Command              |
