@@ -1,0 +1,2 @@
+# countif
+countif = lambda condition: F.sum(F.when(condition, 1).otherwise(0))
