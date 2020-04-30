@@ -1,13 +1,14 @@
-agg_column = ['item', 'loc']
-time_column = 'time'
-sls_column = 'qty'
+id_cols = ['item', 'loc']
+date_cols = ['time']
+value_col = 'qty'
+id_row_index_col = '_'.join(id_cols) + '_row_id'
 data = [(1, None,'a', 'x'), 
         (2, None,'a', 'x'), 
         (3, None,'a', 'x'), 
         (4, 4,'a', 'x'), 
         (5, None,'a', 'x'),
         (6, 1,'a', 'x'), 
-        (7, 2,'a', 'x'), 
+        (7, 0,'a', 'x'), 
         (8, 3,'a', 'x'), 
         (9, None,'a', 'x'), 
         (10, 5,'a', 'x'),
@@ -16,9 +17,9 @@ data = [(1, None,'a', 'x'),
         (13, 1,'b', 'x'), 
         (14, 1,'b', 'x'), 
         (15, 2,'b', 'x'),
-        (16, 2,'b', 'x'), 
-        (17, 2,'b', 'x'), 
-        (18, 2,'b', 'x'), 
+        (16, 0,'b', 'x'), 
+        (17, 0,'b', 'x'), 
+        (18, 0,'b', 'x'), 
         (19, 2,'b', 'x'), 
         (20, 2,'b', 'x'),
         (21, None,'b', 'y'), 
@@ -28,22 +29,37 @@ data = [(1, None,'a', 'x'),
 columns = ['time', 'qty', 'item', 'loc']
 df = spark.createDataFrame(data, columns)
 
-df.show()
-
-window_spec = W.Window \
-    .partitionBy(*agg_column) \
-    .orderBy(time_column)
-df = df.withColumn('part_row_n', F.row_number().over(window_spec))
-df = df.withColumn('part_row_n', F.when(F.col(sls_column).isNotNull(), F.col('part_row_n')))
-
-# compute/add the number of leading nulls
-df = df.withColumn('n_leading_nulls', F.first('part_row_n', ignorenulls=True).over(window_spec) - F.lit(1))
+window_spec = Window \
+    .partitionBy(*id_cols) \
+    .orderBy(*date_cols)
+df = df \
+  .withColumn(id_row_index_col, F.row_number().over(window_spec)) \
+  .withColumn(id_row_index_col, F.when(F.col(value_col).isNotNull(), F.col(id_row_index_col))) \
+  .withColumn(f'{value_col}_leading_null_count', F.first(id_row_index_col, ignorenulls=True).over(window_spec) - F.lit(1))
 # fill-backward
-window_spec = W.Window \
-    .partitionBy(*agg_column) \
-    .orderBy(time_column) \
-    .rowsBetween(W.Window.currentRow, W.Window.unboundedFollowing)
-filled_col = F.first('n_leading_nulls', ignorenulls=True).over(window_spec)
-df = df.withColumn('n_leading_nulls', filled_col)
-
-df.select(*agg_column, time_column, sls_column, 'part_row_n', 'n_leading_nulls').show(1000)
+window_spec = Window \
+    .partitionBy(*id_cols) \
+    .orderBy(*date_cols) \
+    .rowsBetween(Window.currentRow, Window.unboundedFollowing)
+filled_col = F.first(f'{value_col}_leading_null_count', ignorenulls=True).over(window_spec)
+df = df \
+  .withColumn(f'{value_col}_leading_null_count', filled_col)
+  
+window_spec = Window \
+    .partitionBy(*id_cols) \
+    .orderBy(*date_cols) \
+    .rowsBetween(Window.unboundedPreceding, Window.unboundedFollowing)
+df = df\
+  .withColumn(f'{value_col}_zero', F.when(F.col(value_col) == 0, F.lit(1)).otherwise(F.lit(0))) \
+  .withColumn(f'{value_col}_not_null_count', F.count(F.col(value_col)).over(window_spec)) \
+  .withColumn(f'{value_col}_zero_count', F.sum(F.col(f'{value_col}_zero')).over(window_spec)) \
+  .withColumn('_'.join(id_cols) + '_count', F.count(F.col(date_cols[0])).over(window_spec)) \
+  .withColumn(f'{value_col}_null_count', F.col('_'.join(id_cols) + '_count') - F.col(f'{value_col}_not_null_count'))
+df.select(*id_cols, *date_cols, value_col, 
+          id_row_index_col, 
+          '_'.join(id_cols) + '_count', 
+          f'{value_col}_not_null_count', 
+          f'{value_col}_null_count',
+          f'{value_col}_leading_null_count',
+          f'{value_col}_zero_count',
+         ).show(1000)
