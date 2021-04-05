@@ -163,47 +163,47 @@ Set flag `archiveLogs` under section `artifactRepository` true/false to enable/d
 # 5. Install Argo CLI 
 
 ## Linux
-### Download the binary
+Download the binary
 ```bash
 curl -sLO https://github.com/argoproj/argo/releases/download/v3.0.1/argo-linux-amd64.gz
 ```
 
-### Unzip
+Unzip
 ```bash
 gunzip argo-linux-amd64.gz
 ```
-### Make binary executable
+Make binary executable
 ```bash
 chmod +x argo-linux-amd64
 ```
-### Move binary to path
+Move binary to path
 ```bash
 mv ./argo-linux-amd64 /usr/local/bin/argo
 ```
-### Test installation
+Test installation
 ```bash
 argo version
 ```
 
 ## MacOs
 
-### Download the binary
+Download the binary
 ```bash
 curl -sLO https://github.com/argoproj/argo/releases/download/v3.0.1/argo-darwin-amd64.gz
 ```
-### Unzip
+Unzip
 ```bash
 gunzip argo-darwin-amd64.gz
 ```
-### Make binary executable
+Make binary executable
 ```bash
 chmod +x argo-darwin-amd64
 ```
-### Move binary to path
+Move binary to path
 ```bash
 mv ./argo-darwin-amd64 /usr/local/bin/argo
 ```
-### Test installation
+Test installation
 ```bash
 argo version
 ```
