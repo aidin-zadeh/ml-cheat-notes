@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  name: wf-input-parameters
+spec:
+  entrypoint: input-parameters-template
+  arguments:
+    parameters:
+      - name: message1
+        value: Task 1 was executed.
+      - name: message2
+        value: Task 2 was executed.
+      - name: message3
+        value: Task 3 was executed.
+      - name: message4
+        value: Task 4 was executed.
+  templates:
+    - name: input-parameters-template
+      inputs:
+        parameters:
+          - name: message1
+          - name: message2
+          - name: message3
+          - name: message4
+      dag:
+        tasks:
+          - name: task1
+            arguments:
+              parameters: [{name: text, value: "{{inputs.parameters.message1}}"}]
+            template: task-template
+          - name: task2
+            arguments:
+              parameters: [{name: text, value:  "{{inputs.parameters.message2}}"}]
+            template: task-template
+            dependencies: [task1]
+          - name: task3
+            arguments:
+              parameters: [{name: text, value: "{{inputs.parameters.message3}}"}]
+            template: task-template
+            dependencies: [task1]
+          - name: task4
+            arguments:
+              parameters: [{name: text, value: "{{inputs.parameters.message4}}"}]
+            template: task-template
+            dependencies: [task2, task3]
+
+    - name: task-template
+      inputs:
+        parameters:
+          - name: text
+      script:
+        image: python:3.8-slim
+        command: ['python']
+        source: |
+          p = "{{inputs.parameters.text}}"
+          print(p)
