@@ -208,6 +208,46 @@ Test installation
 argo version
 ```
 
+# 6. Deploy workflow with Argo CLI:
+List all worflows in `argo` namespace:
+```bash
+argo -n argo list
+```
+Delete the template if already exists:
+```bash
+argo -n argo delete wf-input-parameters 
+```
+Submit workflow
+```bash
+argo -n argo submit wf-input-parameters-template.yaml
+```
+Submit workflow overriding the default parameter values from terminal
+```bash
+argo -n argo submit wf-input-parameters-template.yaml -p message1='override message'
+```
+Submit workflow overriding the default parameter values from a yaml file
+```bash
+argo -n argo submit wf-input-parameters-template.yaml --parameter-file parameters.yaml
+```
+
+# 7. Secrets
+Create secrets
+```bash
+echo 'mydummypassword' > password_file.txt
+```
+Create a generic secret key
+```echo
+kubectl -n argo create secret generic test-secret --from-file=test-password=password_file.txt
+```
+List registerd secrets in namespace argo
+```bash
+ kubectl -n argo get secrets
+```
+List details of an specific secret
+```bash
+kubectl -n argo describe secret test-secret
+```
+
 
 
 
