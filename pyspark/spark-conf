@@ -1,0 +1,3 @@
+
+# get spark conf for spark.executor.extraJavaOptions
+spark.conf.get('spark.executor.extraJavaOptions')
