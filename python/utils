@@ -1,0 +1,8 @@
+def minibatch(lb, ub, size):
+  for lb_i in range(lb, ub+size, size):
+    ub_i = lb_i + size - 1
+    if ub_i <= ub:
+      yield lb_i, ub_i
+    else:
+      break
+  yield lb_i, ub
